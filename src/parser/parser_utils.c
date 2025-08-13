@@ -6,7 +6,7 @@
 /*   By: kmaeda <kmaeda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 17:06:17 by kmaeda            #+#    #+#             */
-/*   Updated: 2025/08/13 16:23:21 by kmaeda           ###   ########.fr       */
+/*   Updated: 2025/08/13 16:58:19 by kmaeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,46 +84,4 @@ void	set_redir_flags(t_cmd *cmd, int redir_type)
 		cmd->append = 1;
 	else if (redir_type == REDIR_HERE_DOC)
 		cmd->here_doc = 1;
-}
-
-int	assign_redir_file(t_cmd *cmd, int redir_type, char *filename)
-{
-	int	fd;
-
-	if (redir_type == REDIR_IN)
-	{
-		fd = open(filename, O_RDONLY);
-		if (fd == -1)
-		{
-			ft_putstr_fd("minishell: ", 2);
-			perror(filename);
-			free(filename);
-			return (1);
-		}
-		close(fd);
-		if (cmd->infile)
-			free(cmd->infile);
-		cmd->infile = filename;
-	}
-	else if (redir_type == REDIR_HERE_DOC)
-	{
-		if (cmd->delim)
-			free(cmd->delim);
-		cmd->delim = filename;
-	}
-	else
-	{
-		if (cmd->outfile)
-		{
-			if (cmd->append)
-				fd = open(cmd->outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
-			else
-				fd = open(cmd->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			if (fd != -1)
-				close(fd);
-			free(cmd->outfile);
-		}
-		cmd->outfile = filename;
-	}
-	return (0);
 }

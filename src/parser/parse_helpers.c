@@ -6,14 +6,14 @@
 /*   By: kmaeda <kmaeda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 18:30:00 by tthajan           #+#    #+#             */
-/*   Updated: 2025/08/13 16:23:21 by kmaeda           ###   ########.fr       */
+/*   Updated: 2025/08/13 16:53:23 by kmaeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "token.h"
 
-int	parse_redir(t_list **tokens, t_cmd *cmd, t_shell *shell)
+static int	parse_redir(t_list **tokens, t_cmd *cmd, t_shell *shell)
 {
 	t_token	*tok;
 	char	*expanded_filename;

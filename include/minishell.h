@@ -6,7 +6,7 @@
 /*   By: kmaeda <kmaeda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 17:49:45 by tthajan           #+#    #+#             */
-/*   Updated: 2025/08/13 16:45:17 by kmaeda           ###   ########.fr       */
+/*   Updated: 2025/08/13 17:29:19 by kmaeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ int		init_output_files(t_cmd *cmd);
 // Parser helper functions
 void	set_redir_flags(t_cmd *cmd, int redir_type);
 int		assign_redir_file(t_cmd *cmd, int redir_type, char *filename);
-int		parse_redir(t_list **tokens, t_cmd *cmd, t_shell *shell);
 int		handle_token(t_list **tokens, t_cmd *cmd, t_shell *shell);
 int		count_commands(t_cmd *cmd_list);
 char	*handle_input(void);
