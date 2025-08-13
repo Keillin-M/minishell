@@ -6,7 +6,7 @@
 /*   By: kmaeda <kmaeda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 15:24:39 by kmaeda            #+#    #+#             */
-/*   Updated: 2025/08/13 15:30:05 by kmaeda           ###   ########.fr       */
+/*   Updated: 2025/08/13 16:36:59 by kmaeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	first_child(t_cmd *cmd, t_shell *shell, char **envp)
 	if (cmd->prev_fd != -1)
 		close(cmd->prev_fd);
 	close(cmd->fd[0]);
-	if (cmd->in_fd != STDIN_FILENO)
+	if (cmd->in_fd >= 0)
 	{
 		dup2(cmd->in_fd, STDIN_FILENO);
 		close(cmd->in_fd);
@@ -34,7 +34,7 @@ static void	last_child(t_cmd *cmd, t_shell *shell, char **envp)
 		close(cmd->fd[0]);
 	if (cmd->fd[1] != -1)
 		close(cmd->fd[1]);
-	if (cmd->in_fd != STDIN_FILENO)
+	if (cmd->in_fd >= 0)
 	{
 		dup2(cmd->in_fd, STDIN_FILENO);
 		close(cmd->in_fd);

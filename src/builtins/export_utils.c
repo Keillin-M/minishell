@@ -6,7 +6,7 @@
 /*   By: kmaeda <kmaeda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 17:10:00 by kmaeda            #+#    #+#             */
-/*   Updated: 2025/08/13 15:32:44 by kmaeda           ###   ########.fr       */
+/*   Updated: 2025/08/13 16:43:21 by kmaeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,6 @@ int	export_with_value(char *arg, t_shell *shell)
 	var_value = equal_sign + 1;
 	if (validate_variable_name(var_name, equal_sign))
 		return (1);
-	if (*var_value == '\0')
-	{
-		*equal_sign = '=';
-		return (0);
-	}
 	add_or_update_env(shell, var_name, var_value);
 	*equal_sign = '=';
 	return (0);

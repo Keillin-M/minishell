@@ -6,7 +6,7 @@
 /*   By: kmaeda <kmaeda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 17:06:17 by kmaeda            #+#    #+#             */
-/*   Updated: 2025/08/12 14:19:42 by kmaeda           ###   ########.fr       */
+/*   Updated: 2025/08/13 16:23:21 by kmaeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,14 +86,31 @@ void	set_redir_flags(t_cmd *cmd, int redir_type)
 		cmd->here_doc = 1;
 }
 
-void	assign_redir_file(t_cmd *cmd, int redir_type, char *filename)
+int	assign_redir_file(t_cmd *cmd, int redir_type, char *filename)
 {
 	int	fd;
 
 	if (redir_type == REDIR_IN)
+	{
+		fd = open(filename, O_RDONLY);
+		if (fd == -1)
+		{
+			ft_putstr_fd("minishell: ", 2);
+			perror(filename);
+			free(filename);
+			return (1);
+		}
+		close(fd);
+		if (cmd->infile)
+			free(cmd->infile);
 		cmd->infile = filename;
+	}
 	else if (redir_type == REDIR_HERE_DOC)
+	{
+		if (cmd->delim)
+			free(cmd->delim);
 		cmd->delim = filename;
+	}
 	else
 	{
 		if (cmd->outfile)
@@ -108,4 +125,5 @@ void	assign_redir_file(t_cmd *cmd, int redir_type, char *filename)
 		}
 		cmd->outfile = filename;
 	}
+	return (0);
 }

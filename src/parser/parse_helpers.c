@@ -6,7 +6,7 @@
 /*   By: kmaeda <kmaeda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 18:30:00 by tthajan           #+#    #+#             */
-/*   Updated: 2025/08/13 15:24:43 by kmaeda           ###   ########.fr       */
+/*   Updated: 2025/08/13 16:23:21 by kmaeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int	parse_redir(t_list **tokens, t_cmd *cmd, t_shell *shell)
 			shell->env_list);
 	if (!expanded_filename)
 		expanded_filename = ft_strdup(tok->value);
-	assign_redir_file(cmd, redir_type, expanded_filename);
+	if (assign_redir_file(cmd, redir_type, expanded_filename))
+		return (1);
 	*tokens = (*tokens)->next;
 	return (0);
 }
