@@ -6,7 +6,7 @@
 /*   By: kmaeda <kmaeda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 18:45:00 by tthajan           #+#    #+#             */
-/*   Updated: 2025/08/13 15:26:55 by kmaeda           ###   ########.fr       */
+/*   Updated: 2025/08/14 10:52:32 by kmaeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,13 @@ void	setup_pipe_execution(t_pipe_info *info, t_cmd *cmd, t_shell *shell)
 		return ;
 	}
 	info->cmd = cmd;
-	pipex(info);
+	if (pipex(info))
+	{
+		close_all_fds(cmd);
+		free(info->pid);
+		set_last_exit_status(1);
+		return ;
+	}
 	info->i++;
 }
 

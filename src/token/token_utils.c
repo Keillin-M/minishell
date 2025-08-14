@@ -6,7 +6,7 @@
 /*   By: kmaeda <kmaeda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 17:44:55 by kmaeda            #+#    #+#             */
-/*   Updated: 2025/08/12 12:20:01 by kmaeda           ###   ########.fr       */
+/*   Updated: 2025/08/14 10:56:09 by kmaeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,14 @@ void	add_token(t_list **tokens, t_token *token)
 
 	new_node = ft_lstnew(token);
 	if (!new_node)
+	{
+		if (token)
+		{
+			free(token->value);
+			free(token);
+		}
 		return ;
+	}
 	ft_lstadd_back(tokens, new_node);
 }
 

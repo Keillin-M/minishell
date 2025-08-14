@@ -6,7 +6,7 @@
 /*   By: kmaeda <kmaeda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 16:20:00 by tthajan           #+#    #+#             */
-/*   Updated: 2025/08/13 14:42:17 by kmaeda           ###   ########.fr       */
+/*   Updated: 2025/08/14 11:40:27 by kmaeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,36 @@ static void	print_env_vars(t_shell *shell)
 		printf("declare -x %s=\"%s\"\n", env_var->key, env_var->value);
 		current = current->next;
 	}
+}
+
+int	export_without_value(char *arg, t_shell *shell)
+{
+	(void)shell;
+	if (!is_valid_identifier(arg))
+	{
+		print_invalid_identifier_error("export", arg);
+		return (1);
+	}
+	return (0);
+}
+
+int	export_with_value(char *arg, t_shell *shell)
+{
+	char	*equal_sign;
+	char	*var_name;
+	char	*var_value;
+
+	equal_sign = ft_strchr(arg, '=');
+	if (validate_export_format(arg, equal_sign))
+		return (1);
+	*equal_sign = '\0';
+	var_name = arg;
+	var_value = equal_sign + 1;
+	if (validate_variable_name(var_name, equal_sign))
+		return (1);
+	add_or_update_env(shell, var_name, var_value);
+	*equal_sign = '=';
+	return (0);
 }
 
 static int	process_export_arg(char **args, int *i, t_shell *shell)

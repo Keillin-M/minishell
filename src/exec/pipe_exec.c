@@ -6,7 +6,7 @@
 /*   By: kmaeda <kmaeda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 15:24:39 by kmaeda            #+#    #+#             */
-/*   Updated: 2025/08/13 16:36:59 by kmaeda           ###   ########.fr       */
+/*   Updated: 2025/08/14 10:52:16 by kmaeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,13 @@ static void	middle_child(t_cmd *cmd, int i, t_shell *shell, char **envp)
 	execute_command(cmd, shell, envp);
 }
 
-void	pipex(t_pipe_info *info)
+int	pipex(t_pipe_info *info)
 {
 	if (info->cmd->next && pipe(info->cmd->fd) == -1)
-		error_exit(NULL, info->cmd, "pipe failed\n");
+		return (perror("pipe failed"), 1);
 	info->pid[info->i] = fork();
 	if (info->pid[info->i] == -1)
-		error_exit(NULL, info->cmd, "fork failed\n");
+		return (perror("fork failed"), 1);
 	if (info->pid[info->i] == 0)
 	{
 		if (info->i == 0)
@@ -89,6 +89,7 @@ void	pipex(t_pipe_info *info)
 		close(info->cmd->fd[1]);
 		info->cmd->next->prev_fd = info->cmd->fd[0];
 	}
+	return (0);
 }
 
 void	exec_pipe(t_cmd *cmd_list, int cmd_count, t_shell *shell, char **envp)

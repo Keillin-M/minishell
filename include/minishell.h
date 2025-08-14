@@ -6,7 +6,7 @@
 /*   By: kmaeda <kmaeda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 17:49:45 by tthajan           #+#    #+#             */
-/*   Updated: 2025/08/13 17:29:19 by kmaeda           ###   ########.fr       */
+/*   Updated: 2025/08/14 11:51:04 by kmaeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int		is_valid_identifier(char *str);
 void	print_invalid_identifier_error(char *command, char *identifier);
 t_env	*find_env_var(t_list *env_list, char *key);
 void	print_command_error(char *cmd, int error_type);
-void	handle_exec_error(char *cmd);
+void	handle_exec_error(char *cmd, t_shell *shell);
 void	print_file_error(char *filename);
 int		ft_pwd(t_shell *shell);
 int		ft_echo(char **args);
@@ -48,6 +48,10 @@ int		ft_env(char **args, t_shell *shell);
 int		ft_cd(char **args, t_shell *shell);
 int		ft_export(char **args, t_shell *shell);
 int		ft_unset(char **args, t_shell *shell);
+
+// Export utility functions
+int		validate_export_format(char *arg, char *equal_sign);
+int		validate_variable_name(char *var_name, char *equal_sign);
 
 // CD utility functions
 void	set_env_value(t_list *env_list, char *key, char *value);
@@ -89,7 +93,7 @@ void	wait_for_pipes(pid_t *pids, int cmd_count);
 void	setup_pipe_execution(t_pipe_info *info, t_cmd *cmd, t_shell *shell);
 void	init_pipe_info(t_pipe_info *info, pid_t *pid, t_shell *shell, 
 			char **envp);
-void	pipex(t_pipe_info *info);
+int		pipex(t_pipe_info *info);
 
 // Exec utilities
 int		init_input_files(t_cmd *cmd, t_shell *shell);

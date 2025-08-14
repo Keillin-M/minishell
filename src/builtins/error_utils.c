@@ -6,7 +6,7 @@
 /*   By: kmaeda <kmaeda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 12:00:00 by tthajan           #+#    #+#             */
-/*   Updated: 2025/08/12 12:38:35 by kmaeda           ###   ########.fr       */
+/*   Updated: 2025/08/14 11:47:22 by kmaeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,12 @@ void	print_command_error(char *cmd, int error_type)
 		ft_putstr_fd(": command not found\n", 2);
 }
 
-void	handle_exec_error(char *cmd)
+void	handle_exec_error(char *cmd, t_shell *shell)
 {
-	if (ft_strchr(cmd, '/'))
+	t_env	*path_env;
+
+	path_env = find_env_var(shell->env_list, "PATH");
+	if (ft_strchr(cmd, '/') || !path_env)
 		print_command_error(cmd, 1);
 	else
 		print_command_error(cmd, 0);

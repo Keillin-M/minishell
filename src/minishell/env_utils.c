@@ -3,21 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tthajan <tthajan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kmaeda <kmaeda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 10:53:03 by kmaeda            #+#    #+#             */
-/*   Updated: 2025/08/12 11:19:59 by tthajan          ###   ########.fr       */
+/*   Updated: 2025/08/14 11:08:25 by kmaeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_list	*env_node(char *env_s)
+static t_env	*create_env_var(char *env_s)
 {
 	int		key_len;
 	char	*equal;
 	t_env	*var;
-	t_list	*node;
 
 	equal = ft_strchr(env_s, '=');
 	if (!equal)
@@ -27,8 +26,37 @@ t_list	*env_node(char *env_s)
 	if (!var)
 		return (NULL);
 	var->key = ft_substr(env_s, 0, key_len);
+	if (!var->key)
+	{
+		free(var);
+		return (NULL);
+	}
 	var->value = ft_strdup(equal + 1);
+	if (!var->value)
+	{
+		free(var->key);
+		free(var);
+		return (NULL);
+	}
+	return (var);
+}
+
+t_list	*env_node(char *env_s)
+{
+	t_env	*var;
+	t_list	*node;
+
+	var = create_env_var(env_s);
+	if (!var)
+		return (NULL);
 	node = ft_lstnew(var);
+	if (!node)
+	{
+		free(var->key);
+		free(var->value);
+		free(var);
+		return (NULL);
+	}
 	return (node);
 }
 

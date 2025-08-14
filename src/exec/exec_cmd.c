@@ -6,7 +6,7 @@
 /*   By: kmaeda <kmaeda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 10:54:16 by kmaeda            #+#    #+#             */
-/*   Updated: 2025/08/13 15:24:16 by kmaeda           ###   ########.fr       */
+/*   Updated: 2025/08/14 11:51:01 by kmaeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	execute_command(t_cmd *cmd, t_shell *shell, char **envp)
 		exit(exit_code);
 	}
 	if (!cmd->path)
-		handle_exec_error(cmd->cmd);
+		handle_exec_error(cmd->cmd, shell);
 	if (execve(cmd->path, cmd->args, envp) == -1)
 	{
 		if (errno == ENOENT && (cmd->cmd[0] == '/' 
