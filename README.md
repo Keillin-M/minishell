@@ -178,4 +178,4 @@ src/
 
 ## 🙌 Credits
 - Created as part of the 42 School curriculum.
-- Group project with @HeartThanakorn
+- Group project with [@HeartThanakorn](https://github.com/HeartThanakorn)
