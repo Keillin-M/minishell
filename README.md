@@ -175,3 +175,7 @@ src/
 * No memory leaks or zombie processes
 * Exit codes must match Bash behavior
 * Handle `Ctrl+C`, `Ctrl+\`, and `Ctrl+D` correctly
+
+## 🙌 Credits
+- Created as part of the 42 School curriculum.
+- Group project with @HeartThanakorn
